@@ -1,0 +1,24 @@
+build:
+  gpu: true
+  python_version: "3.10.13"
+  sdk_version: "0.22.0"
+  python_requirements: requirements-replicate.txt
+  system_packages:
+    - ffmpeg
+    - libsndfile1
+    - libsox-dev
+    - build-essential
+    - cmake
+  run:
+    - >-
+      python -m pip install --no-cache-dir --no-deps
+      https://huggingface.co/spaces/yujiuzumaki/tes3/resolve/79d754c2f2a211471fbb3f365214020d21d8cd8b/gpt_sovits_python-1.0.0-py3-none-any.whl
+      https://huggingface.co/spaces/yujiuzumaki/tes3/resolve/79d754c2f2a211471fbb3f365214020d21d8cd8b/langsegment-0.2.0-py3-none-any.whl
+    - python -m nltk.downloader -d /opt/haven/nltk_data averaged_perceptron_tagger averaged_perceptron_tagger_eng cmudict
+    - >-
+      HF_HUB_DISABLE_XET=1 python -c "from huggingface_hub import snapshot_download;
+      snapshot_download(repo_id='MoYoYoTech/tone-models',
+      revision='198ceeac1c4d5b75072b6995af2e185e4559ec1d',
+      local_dir='/opt/haven/models/tone-models',
+      allow_patterns=['GPT_weights/maple_best_gpt.ckpt','SoVITS_weights/cove_best_sovits.pth','ref_audios/cove_ref.wav','chinese-hubert-base/**','chinese-roberta-wwm-ext-large/**'])"
+run: "run.py:Runner"

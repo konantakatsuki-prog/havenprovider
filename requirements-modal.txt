@@ -1,0 +1,6 @@
+# Modal deployment dependencies. The shared core remains stdlib-only.
+modal
+nltk
+torch
+torchaudio
+torchcodec
